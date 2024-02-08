@@ -59,15 +59,6 @@ describe('Book section behavior', () => {
 })
 
 describe('Comment Area behavior', () => {
-  // const test = () => {
-  //   const comments = screen.getAllByTestId('comment')
-  //   const emptyTxt = screen.getByText(/non ci sono commenti/i)
-  //   if (comments.length === 0) {
-  //     return emptyTxt
-  //   } else {
-  //     return comments
-  //   }
-  // }
   it('properly loads comments', async () => {
     render(<App />)
     const firstBookSelectBtn = screen.getAllByText(/seleziona/i)[1]
@@ -76,7 +67,11 @@ describe('Comment Area behavior', () => {
     expect(spinner).toBeInTheDocument()
     await waitFor(() => {
       expect(spinner).not.toBeInTheDocument()
-      // expect(test()).toBeInTheDocument()
+    })
+    await waitFor(() => {
+      const comments = screen.queryAllByTestId('comment')
+      const emptyTxt = screen.queryByText(/non ci sono commenti/i)
+      expect(comments.length > 0 ? comments[0] : emptyTxt).toBeInTheDocument()
     })
   })
 })
